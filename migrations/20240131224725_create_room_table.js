@@ -10,8 +10,8 @@ exports.up = function (knex) {
       table.string("theme").notNullable();
       table.string("address").notNullable();
       table.string("cost").notNullable();
-      table.int("group-size").notNullable();
-      table.int("duration").notNullable();
+      table.integer("group-size").notNullable();
+      table.integer("duration").notNullable();
       table.string("difficulty").notNullable();
       table.float("success-rate").notNullable();
       table.float("overall-rating").notNullable();
@@ -23,9 +23,6 @@ exports.up = function (knex) {
 
       table.timestamp("updated_at").defaultTo(knex.fn.now());  
       table.timestamp("created_at").defaultTo(knex.fn.now());
-      table
-        .timestamp("updated_at")
-        .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
     });
   };
   
