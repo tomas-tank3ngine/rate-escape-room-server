@@ -22,7 +22,6 @@ exports.up = function (knex) {
       table.float("staff-rating").notNullable();
       table.string("thumbnail");
       table.string("website-url");
-      table.string("share-url");
 
       table.timestamp("updated_at").defaultTo(knex.fn.now());  
       table.timestamp("created_at").defaultTo(knex.fn.now());
