@@ -11,11 +11,14 @@ app.use(express.json());
 // const warehouseRoutes = require("./routes/warehouseRoute");
 // const inventoryRoutes = require("./routes/inventoryRoute");
 
+
+
 //Basic Home Route
 app.get("/", (_req, res) => {
   res.send("Welcome to my API");
 });
 
+app.use("/rooms, roomRoute");
 // app.use("/warehouses", warehouseRoutes);
 // app.use("/inventories", inventoryRoutes);
 
