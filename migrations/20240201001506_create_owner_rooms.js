@@ -5,10 +5,10 @@
 exports.up = function (knex) {
     return knex.schema.createTable("owner_rooms", (table) => {
       table.uuid("id").primary();
-      table.integer("owner_id").unsigned().notNullable();
+      table.uuid("owner_id").notNullable();
       table.foreign("owner_id").references("id").inTable("owners").onUpdate("CASCADE");
       
-      table.integer("room_id").unsigned().notNullable();
+      table.uuid("room_id").notNullable();
       table.foreign("room_id").references("id").inTable("rooms").onUpdate("CASCADE");
   
       table.timestamp("updated_at").defaultTo(knex.fn.now());
