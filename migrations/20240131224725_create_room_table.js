@@ -5,6 +5,7 @@
 exports.up = function (knex) {
     return knex.schema.createTable("rooms", (table) => {
       table.uuid("id").primary();
+      table.uuid("owner_id").references()
       table.string("name").notNullable();
       table.string("description").notNullable();
       table.string("theme").notNullable();

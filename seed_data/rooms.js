@@ -1,6 +1,7 @@
 module.exports = [
     {
         id: '1',
+        'owner_id': 1,
         'name': 'Adventure Quest',
         'description': 'Embark on a thrilling adventure with mind-bending puzzles.',
         'theme': 'Adventure',
@@ -21,6 +22,7 @@ module.exports = [
       },
       {
         id: '2',
+        'owner_id': 2,
         'name': 'Mystery Mansion Escape',
         'description': 'Explore the mysterious mansion and solve the mystery.',
         'theme': 'Mystery',
@@ -41,6 +43,7 @@ module.exports = [
       },
       {
         id: '3',
+        'owner_id': 3,
         'name': 'Budget Breakout',
         'description': 'Solve puzzles on a budget and experience the thrill.',
         'theme': 'Budget',
@@ -61,6 +64,7 @@ module.exports = [
       },
       {
         id: '4',
+        'owner_id': 4,
         'name': 'Space Odyssey',
         'description': 'Embark on a space-themed adventure with cosmic challenges.',
         'theme': 'Space',
@@ -81,6 +85,7 @@ module.exports = [
       },
       {
         id: '5',
+        'owner_id': 5,
         'name': 'Enchanted Escape',
         'description': 'Step into a magical world and solve enchanting puzzles.',
         'theme': 'Fantasy',
