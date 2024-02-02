@@ -14,12 +14,12 @@ const reviewsData = require('../seed_data/reviews')
 
 exports.seed = async function(knex) {
   // Deletes ALL existing entries and replace with seed data
-  await knex('owner').del()
-  await knex('owner').insert(ownersData);
-  await knex('room').del()
-  await knex('room').insert(roomsData);
-  await knex('player').del()
-  await knex('player').insert(playersData);
-  await knex('review').del()
-  await knex('review').insert(reviewsData);
+  await knex('owners').del()
+  await knex('owners').insert(ownersData);
+  await knex('rooms').del()
+  await knex('rooms').insert(roomsData);
+  await knex('players').del()
+  await knex('players').insert(playersData);
+  await knex('reviews').del()
+  await knex('reviews').insert(reviewsData);
 };
