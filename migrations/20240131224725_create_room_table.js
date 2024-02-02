@@ -4,7 +4,7 @@
  */
 exports.up = function (knex) {
     return knex.schema.createTable("rooms", (table) => {
-      table.increments("id").primary();
+      table.uuid("id").primary();
       table.string("name").notNullable();
       table.string("description").notNullable();
       table.string("theme").notNullable();
@@ -20,6 +20,9 @@ exports.up = function (knex) {
       table.float("tech-rating").notNullable();
       table.float("storyline-rating").notNullable();
       table.float("staff-rating").notNullable();
+      table.string("thumbnail");
+      table.string("website-url");
+      table.string("share-url");
 
       table.timestamp("updated_at").defaultTo(knex.fn.now());  
       table.timestamp("created_at").defaultTo(knex.fn.now());

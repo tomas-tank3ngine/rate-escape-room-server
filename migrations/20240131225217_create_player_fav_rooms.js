@@ -4,7 +4,7 @@
  */
 exports.up = function (knex) {
   return knex.schema.createTable("player_fav_rooms", (table) => {
-    table.increments("id").primary();
+    table.uuid("id").primary();
     //make a new int field called player_id - it is a primary key
     table.integer("player_id").unsigned().notNullable();
     
