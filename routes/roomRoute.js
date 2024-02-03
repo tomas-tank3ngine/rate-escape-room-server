@@ -11,6 +11,7 @@ router.route("/:id")
     .delete(roomController.deleteRoom)
 
 router.route("/:id/reviews")
-    .get(roomController.roomReviews);
+    .get(roomController.roomReviews)
+    .post(roomController.addRoomReview);
 
 module.exports = router;

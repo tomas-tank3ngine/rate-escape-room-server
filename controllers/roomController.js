@@ -161,6 +161,7 @@ const roomReviews = async (req, res) => {
 const addRoomReview = async (req, res) => {
     if (
         !req.body.user_id ||
+        !req.body.room_id ||
         !req.body.comment ||
         !req.body.atmosphere_rating ||
         !req.body.puzzle_fairness_rating ||
@@ -174,14 +175,14 @@ const addRoomReview = async (req, res) => {
     }
 
     try {
-        const roomId = uuidv4();
+        const reviewId = uuidv4();
 
         const result = await knex("rooms").insert({
-            id: roomId,
+            id: reviewId,
             ...req.body,
         });
 
-        //if we have successfully written the room to the table, then return the room from the table as a response
+        //if we have successfully written the review to the table, then return the review from the table as a response
         if (result && result.length > 0) {
             const createdRoom = await knex("rooms")
                 .where({ id: roomId })

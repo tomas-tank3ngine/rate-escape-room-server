@@ -20,11 +20,11 @@ exports.up = function (knex) {
             .onUpdate("CASCADE");
 
         table.string("comment").notNullable();
-        table.float("atmosphere_rating");
-        table.float("puzzle_fairness_rating");
-        table.float("tech_rating");
-        table.float("storyline_rating");
-        table.float("staff_rating");
+        table.float("atmosphere_rating").notNullable();
+        table.float("puzzle_fairness_rating").notNullable();
+        table.float("tech_rating").notNullable();
+        table.float("storyline_rating").notNullable();
+        table.float("staff_rating").notNullable();
 
         table.timestamp("updated_at").defaultTo(knex.fn.now());
         table.timestamp("created_at").defaultTo(knex.fn.now());
