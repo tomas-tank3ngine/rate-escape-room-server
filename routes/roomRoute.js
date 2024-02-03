@@ -7,8 +7,8 @@ router.route("/")
 
 router.route("/:id")
     .get(roomController.findOneRoom)
-    // .patch(roomController.updateRoom)
-    // .delete(roomController.deleteRoom)
+    .patch(roomController.updateRoom)
+    .delete(roomController.deleteRoom)
 
 // router.route("/:id/reviews").get(roomController.roomReviews);
 
