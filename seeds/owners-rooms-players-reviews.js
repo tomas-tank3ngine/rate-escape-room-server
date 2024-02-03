@@ -4,8 +4,6 @@
  */
 
 // import seed data files, arrays of objects
-// const inventoryData = require("../seed_data/inventory");
-// const warehouseData = require("../seed_data/warehouse");
 
 const ownersData = require('../seed_data/owners')
 const roomsData = require('../seed_data/rooms')
