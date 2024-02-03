@@ -23,13 +23,13 @@ exports.up = function (knex) {
       table.integer("group_size").notNullable();
       table.integer("duration").notNullable();
       table.string("difficulty");
-      table.float("success_rate");
-      table.float("overall_rating");
-      table.float("atmosphere_rating");
-      table.float("puzzle_fairness_rating");
-      table.float("tech_rating");
-      table.float("storyline_rating");
-      table.float("staff_rating");
+      table.float("completion_rate").defaultTo(0);
+      table.float("overall_rating").defaultTo(0);
+      table.float("atmosphere_rating").defaultTo(0);
+      table.float("puzzle_fairness_rating").defaultTo(0);
+      table.float("tech_rating").defaultTo(0);
+      table.float("storyline_rating").defaultTo(0);
+      table.float("staff_rating").defaultTo(0);
       table.string("thumbnail");
       table.string("website_url");
   

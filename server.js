@@ -10,6 +10,7 @@ app.use(express.json());
 
 const roomRoutes = require("./routes/roomRoute")
 const userRoutes = require("./routes/userRoute")
+const favoriteRoutes = require("./routes/favoriteRoute")
 
 //Basic Home Route
 app.get("/", (_req, res) => {
@@ -18,6 +19,7 @@ app.get("/", (_req, res) => {
 
 app.use("/rooms", roomRoutes);
 app.use("/users", userRoutes);
+app.use("/favorites", favoriteRoutes);
 
 app.listen(PORT, () => {
   console.log(`running at http://localhost:${PORT}`);
