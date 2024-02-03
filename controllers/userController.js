@@ -135,8 +135,9 @@ const deleteUser = async (req, res) => {
 module.exports = {
   allUsers,
   findOneUser,
-  //   posts,
   addUser,
   updateUser,
   deleteUser,
+//   addFavRoom,
+//   removeFavRoom
 };
