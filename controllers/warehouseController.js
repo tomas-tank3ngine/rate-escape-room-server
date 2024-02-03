@@ -1,86 +1,42 @@
 const knex = require("knex")(require("../knexfile"));
 
-exports.index = async (_req, res) => {
+const allRooms = async (_req, res) => {
   try {
-    const data = await knex("warehouse").select("id", "name", "manager");
-    res.json(data);
+    const data = await knex("rooms");
+    res.status(200).json(data);
   } catch (err) {
-    res.status(400).send(`Error retrieving Warehouses: ${err}`);
+    res.status(400).send(`Error retrieving Users: ${err}`);
   }
 };
 
-exports.singleWarehouse = async (req, res) => {
+//Below is the same as: SELECT * FROM user WHERE id=#,
+//where # is our parameter at req.params.id
+const findOneRoom = async (req, res) => {
   try {
-    const data = await knex("warehouse").where({ id: req.params.id });
+    const roomsFound = await knex("user")
+      .where({ id: req.params.id });
 
-    // If record is not found, respond with 404
-    if (!data.length) {
-      return res
-        .status(404)
-        .send(`Record with id: ${req.params.id} is not found`);
+    if (roomsFound.length === 0) {
+      return res.status(404).json({
+        message: `User with ID ${req.params.id} not found` 
+      });
     }
 
-    // Knex returns an array of records, so we need to send response with a single object only
-    res.json(data[0]);
-  } catch (err) {
-    res.status(400).send(`Error retrieving warehouse ${req.params.id}: ${err}`);
+    const roomData = roomsFound[0];
+    res.json(roomData);
+  } catch (error) {
+    res.status(500).json({
+      message: `Unable to retrieve user data for user with ID ${req.params.id}`,
+    });
   }
 };
 
-exports.warehouseInventories = async (req, res) => {
-  try {
-    const data = await knex("inventory").where({ warehouse_id: req.params.id });
-    res.json(data);
-  } catch (err) {
-    res
-      .status(400)
-      .send(
-        `Error retrieving inventories for Warehouse ${req.params.id}: ${err}`
-      );
-  }
-};
-
-exports.addWarehouse = async (req, res) => {
-  // Validate the request body for required data
-  if (
-    !req.body.name ||
-    !req.body.manager ||
-    !req.body.address ||
-    !req.body.phone ||
-    !req.body.email
-  ) {
-    return res
-      .status(400)
-      .send(
-        "Please make sure to provide name, manager, address, phone and email fields in request"
-      );
-  }
-
-  try {
-    const data = await knex("warehouse").insert(req.body);
-
-    // For POST requests we can respond with 201 and the location of the newly created record
-    const newWarehouseURL = `/warehouses/${data[0]}`;
-    res.status(201).location(newWarehouseURL).end(newWarehouseURL);
-  } catch (err) {
-    res.status(400).send(`Error creating Warehouse: ${err}`);
-  }
-};
-
-exports.updateWarehouse = async (req, res) => {
-  try {
-    await knex("warehouse").update(req.body).where({ id: req.params.id });
-    res.send(`Warehouse with id: ${req.params.id} has been updated`);
-  } catch (err) {
-    res.status(400).send(`Error updating Warehouse ${req.params.id}: ${err}`);
-  }
-};
-
-exports.deleteWarehouse = async (req, res) => {
-  try {
-    await knex("warehouse").delete().where({ id: req.params.id });
-    res.status(204).send(`Warehouse with id ${req.params.id} was deleted`);
-  } catch (err) {
-    res.status(400).send(`Error deleting Warehouse ${req.params.id}: ${err}`);
-  }
+//note that module.exports is an object with functions inside it
+module.exports = {
+  allRooms,
+  findOneRoom,
+  posts,
+  add,
+  update,
+  remove,
 };
