@@ -34,7 +34,7 @@ const findOneRoom = async (req, res) => {
 };
 
 //Create a room
-//Make sure that the owner_id exists in the req body in the frontend
+//Make sure that the user_id exists in the req body in the frontend
 const addRoom = async (req, res) => {
   if (
     !req.body.name ||

@@ -9,6 +9,7 @@ exports.up = function (knex) {
       table.string("password").notNullable();
       table.string("email").notNullable();
       table.string("thumbnail");
+      table.boolean("is_owner").notNullable();
       table.timestamp("updated_at").defaultTo(knex.fn.now());
   
       table.timestamp("created_at").defaultTo(knex.fn.now());
