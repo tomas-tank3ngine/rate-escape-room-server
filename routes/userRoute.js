@@ -10,6 +10,4 @@ router.route("/:id")
     .patch(userController.updateUser)
     .delete(userController.deleteUser)
 
-// router.route("/:id/reviews").get(userController.userReviews);
-
 module.exports = router;

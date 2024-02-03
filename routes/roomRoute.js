@@ -10,6 +10,7 @@ router.route("/:id")
     .patch(roomController.updateRoom)
     .delete(roomController.deleteRoom)
 
-// router.route("/:id/reviews").get(roomController.roomReviews);
+router.route("/:id/reviews")
+    .get(roomController.roomReviews);
 
 module.exports = router;
