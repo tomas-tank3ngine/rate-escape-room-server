@@ -19,17 +19,17 @@ exports.up = function (knex) {
     table.string("description").notNullable();
     table.string("theme").notNullable();
     table.string("address").notNullable();
-    table.string("cost").notNullable();
-    table.integer("group-size").notNullable();
+    table.string("cost");
+    table.integer("groupSize").notNullable();
     table.integer("duration").notNullable();
-    table.string("difficulty").notNullable();
-    table.float("success-rate").notNullable();
-    table.float("overall-rating").notNullable();
-    table.float("atmosphere-rating").notNullable();
-    table.float("puzzle-fairness-rating").notNullable();
-    table.float("tech-rating").notNullable();
-    table.float("storyline-rating").notNullable();
-    table.float("staff-rating").notNullable();
+    table.string("difficulty");
+    table.float("success-rate");
+    table.float("overall-rating");
+    table.float("atmosphere-rating");
+    table.float("puzzle-fairness-rating");
+    table.float("tech-rating");
+    table.float("storyline-rating");
+    table.float("staff-rating");
     table.string("thumbnail");
     table.string("website-url");
 

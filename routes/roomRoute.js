@@ -3,7 +3,7 @@ const roomController = require("../controllers/roomController");
 
 router.route("/")
     .get(roomController.allRooms)
-    // .post(roomController.addRoom)
+    .post(roomController.addRoom)
 
 router.route("/:id")
     .get(roomController.findOneRoom)
