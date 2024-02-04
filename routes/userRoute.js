@@ -3,12 +3,12 @@ const userController = require("../controllers/userController");
 const authenticateToken = require('../middleware/jwtMiddleware');
 
 router.route("/")
-    .get(userController.allUsers)
-    .post(userController.addUser)
+    .get(authenticateToken, userController.allUsers)
+    .post(authenticateToken, userController.addUser)
 
 router.route("/:id")
-    .get(userController.findOneUser)
-    .patch(userController.updateUser)
-    .delete(userController.deleteUser)
+    .get(authenticateToken, userController.findOneUser)
+    .patch(authenticateToken, userController.updateUser)
+    .delete(authenticateToken, userController.deleteUser)
 
 module.exports = router;
