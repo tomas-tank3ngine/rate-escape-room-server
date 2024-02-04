@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const userController = require("../controllers/userController");
+const authenticateToken = require('../middleware/jwtMiddleware');
 
 router.route("/")
     .get(userController.allUsers)
