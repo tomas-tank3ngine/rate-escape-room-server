@@ -1,6 +1,8 @@
 const knexConfig = require("../knexfile.js").development;
 const knex = require("knex")(knexConfig);
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const allUsers = async (_req, res) => {
     try {
@@ -33,56 +35,79 @@ const findOneUser = async (req, res) => {
     }
 };
 
-//Create a user
-//Make sure that the user_id exists in the req body in the frontend
-const addUser = async (req, res) => {
+//expected body: { username, password, email, isOwner, thumbnail}
+const registerUser = async (req, res) => {
+    const {username, password, email, isOwner} = req.body;
     if (
-        !req.body.name ||
-        !req.body.user_id ||
-        !req.body.description ||
-        !req.body.theme ||
-        !req.body.group_size ||
-        !req.body.duration
-    ) {
+        !username ||
+        !password ||
+        !email ||
+        !isOwner
+    ){
         return res.status(400).json({
             message: "You are missing information for the user in the request",
-        });
+        })
     }
+
+    const hashedPassword = bcrypt.hashSync(password);
+    const userId = uuidv4();
+
+    const newUser = {
+        id: userId,
+        username,
+        email,
+        is_owner: isOwner,
+        password: hashedPassword,
+    };
 
     try {
-        //check if user already exists
-        const existingUser = await knex("users").where({ user_id: req.body.user_id }).first();
-
-        if (existingUser) {
-            return res.status(400).json({
-                message: "A user with the same user_id already exists",
-            });
-        }
-        const userId = uuidv4();
-
-        const result = await knex("users").insert({
-            id: userId,
-            ...req.body,
-        });
-
-        //if we have successfully written the user to the table, then return the user from the table as a response
-        if (result && result.length > 0) {
-            const createdUser = await knex("users")
-                .where({ id: userId })
-                .first();
-
-            res.status(201).json(createdUser);
-        } else {
-            res.status(500).json({
-                message: "Unable to create new user.",
-            });
-        }
-    } catch (error) {
-        res.status(500).json({
-            message: `Unable to create new user: ${error}`,
-        });
+        await knex("users").insert(newUser);
+        res.status(201).send("Registered successfully");
+    } catch (err) {
+        console.log(err);
+        res.status(400).send("Failed registration");
     }
-};
+}
+
+//post login user
+//expected body: {email, password}
+const loginUser = async (req, res) => {
+    const {identifier, password } = req.body;
+    //check to make sure both fields were filled in
+    if (!identifier || !password){
+        return res.status(400).json({
+            message: "You are missing information for the user in the request",
+        })
+    }
+
+    //find user using email or username
+    const user = await knex("users")
+        .where({ email: identifier })
+        .orWhere({ username: identifier })
+        .first();
+    
+        if (!user){
+            return res.status(400).json({
+                message: "Invalid identifier",
+            })
+        }
+
+    const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+
+    if (!isPasswordCorrect) {
+        return res.status(400).json({
+            message: "Invalid password",
+        })
+    }
+
+    const token = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_KEY,
+        { expiresIn: "24h" }
+    );
+
+    res.status(200).json({ token: token });
+}
 
 // Update a user by ID
 const updateUser = async (req, res) => {
@@ -141,11 +166,37 @@ const deleteUser = async (req, res) => {
     }
 };
 
+// Expected headers: { Authorization: "Bearer JWT_TOKEN_HERE" }
+const currentUser = async (req, res) => {
+    if (!req.headers.authorization) {
+        return res.status(401).send("Please login");
+    }
+
+    //store auth token
+    const authHeader = req.headers.authorization;
+    //remove the 'bearer' part of the string, keeping the second string (the token)
+    const authToken = authHeader.split(" ")[1];
+
+    //verify token
+    try {
+        const decodedToken = jwt.verify(authToken, process.env.JWT_KEY);
+
+        const user = await knex("users").where({ id: decodedToken.id }).first();
+
+        delete user.password;
+        res.json(user);
+    } catch (err) {
+        return res.status(401).send("Invalid auth token: ", err);
+    }
+};
+
 //note that module.exports is an object with functions inside it
 module.exports = {
     allUsers,
     findOneUser,
-    addUser,
     updateUser,
     deleteUser,
+    currentUser,
+    registerUser,
+    loginUser,
 };
