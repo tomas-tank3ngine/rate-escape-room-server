@@ -1,15 +1,16 @@
 const router = require("express").Router();
 const userController = require("../controllers/userController");
+const authorize = require("../middleware/authorize");
 
 
 router.route("/")
     .get(userController.allUsers)
-    // .post(userController.addUser)
 
 router.route("/:id")
     .get(userController.findOneUser)
-    .patch(userController.updateUser)
-    .delete(userController.deleteUser)
+    .patch(authorize, userController.updateUser)
+    .delete(authorize, userController.deleteUser)
+
 router.route("/current")
     .get(userController.currentUser)
 
