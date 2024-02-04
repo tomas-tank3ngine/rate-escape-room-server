@@ -50,6 +50,14 @@ const addUser = async (req, res) => {
     }
 
     try {
+        //check if user already exists
+        const existingUser = await knex("users").where({ user_id: req.body.user_id }).first();
+
+        if (existingUser) {
+            return res.status(400).json({
+                message: "A user with the same user_id already exists",
+            });
+        }
         const userId = uuidv4();
 
         const result = await knex("users").insert({
