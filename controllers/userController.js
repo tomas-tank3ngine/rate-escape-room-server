@@ -35,39 +35,55 @@ const findOneUser = async (req, res) => {
     }
 };
 
-//expected body: { username, password, email, isOwner, thumbnail}
+//expected body: { username, password, email, isOwner}
 const registerUser = async (req, res) => {
-    const {username, password, email, isOwner} = req.body;
-    if (
-        !username ||
-        !password ||
-        !email ||
-        !isOwner
-    ){
+    const { username, password, email, isOwner } = req.body;
+
+    if (!username || !password || !email || isOwner === undefined) {
         return res.status(400).json({
             message: "You are missing information for the user in the request",
-        })
+        });
     }
-
-    const hashedPassword = bcrypt.hashSync(password);
-    const userId = uuidv4();
-
-    const newUser = {
-        id: userId,
-        username,
-        email,
-        is_owner: isOwner,
-        password: hashedPassword,
-    };
 
     try {
+        // Check if the user with the given email or username already exists
+        const existingUser = await knex("users")
+            .where({ email: email })
+            .orWhere({ username: username })
+            .first();
+
+        if (existingUser) {
+            return res.status(400).json({
+                message: "User with the same email or username already exists",
+            });
+        }
+
+        const hashedPassword = bcrypt.hashSync(password);
+        const userId = uuidv4();
+
+        const newUser = {
+            id: userId,
+            username,
+            email,
+            is_owner: isOwner,
+            password: hashedPassword,
+        };
+
         await knex("users").insert(newUser);
-        res.status(201).send("Registered successfully");
+        
+        // After successful registration, generate a JWT token
+        const token = jwt.sign(
+            { id: userId, email: email },
+            process.env.JWT_KEY,
+            { expiresIn: "24h" }
+        );
+
+        res.status(201).json({ token, id: userId });
     } catch (err) {
         console.log(err);
-        res.status(400).send("Failed registration");
+        res.status(500).send("Failed registration");
     }
-}
+};
 
 //post login user
 //expected body: {email, password}
