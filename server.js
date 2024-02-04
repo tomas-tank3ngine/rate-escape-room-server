@@ -5,19 +5,23 @@ const app = express();
 const cors = require('cors');
 const PORT = process.env.PORT || 8080;
 
-app.use(cors())
-app.use(express.json());
+
 
 const roomRoutes = require("./routes/roomRoute")
 const userRoutes = require("./routes/userRoute")
+const favoriteRoutes = require("./routes/favoriteRoute")
+
+app.use(cors())
+app.use(express.json());
 
 //Basic Home Route
-app.get("/", (_req, res) => {
+app.get("/api/", (_req, res) => {
   res.send("Welcome to my API");
 });
 
-app.use("/rooms", roomRoutes);
-app.use("/users", userRoutes);
+app.use("/api/rooms", roomRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/favorites", favoriteRoutes);
 
 app.listen(PORT, () => {
   console.log(`running at http://localhost:${PORT}`);
