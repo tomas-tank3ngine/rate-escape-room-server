@@ -105,8 +105,9 @@ const loginUser = async (req, res) => {
         process.env.JWT_KEY,
         { expiresIn: "24h" }
     );
+    console.log(token)
 
-    res.status(200).json({ token: token });
+    res.status(200).json({ token:token, id:user.id });
 }
 
 // Update a user by ID
@@ -180,7 +181,8 @@ const currentUser = async (req, res) => {
     //verify token
     try {
         const decodedToken = jwt.verify(authToken, process.env.JWT_KEY);
-
+        
+        console.log(decodedToken.id);
         const user = await knex("users").where({ id: decodedToken.id }).first();
 
         delete user.password;

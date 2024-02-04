@@ -11,13 +11,13 @@ router.route("/:id")
     .patch(authorize, userController.updateUser)
     .delete(authorize, userController.deleteUser)
 
-router.route("/current")
+router.route("/account/current")
     .get(userController.currentUser)
 
-router.route("/register")
+router.route("/account/register")
     .post(userController.registerUser)
 
-router.route("/login")
+router.route("/account/login")
     .post(userController.loginUser)
 
 module.exports = router;
