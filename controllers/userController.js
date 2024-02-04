@@ -182,7 +182,6 @@ const currentUser = async (req, res) => {
     try {
         const decodedToken = jwt.verify(authToken, process.env.JWT_KEY);
         
-        console.log(decodedToken.id);
         const user = await knex("users").where({ id: decodedToken.id }).first();
 
         delete user.password;
