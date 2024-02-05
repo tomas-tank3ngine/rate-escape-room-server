@@ -18,7 +18,7 @@ const allUsers = async (_req, res) => {
 const findOneUser = async (req, res) => {
     try {
         const usersFound = await knex("users").where({ id: req.params.id });
-        0;
+
         if (usersFound.length === 0) {
             return res.status(404).json({
                 message: `User with ID ${req.params.id} not found`,
@@ -36,6 +36,7 @@ const findOneUser = async (req, res) => {
 };
 
 //expected body: { username, password, email, isOwner}
+//response: token, id
 const registerUser = async (req, res) => {
     const { username, password, email, isOwner } = req.body;
 
@@ -86,7 +87,7 @@ const registerUser = async (req, res) => {
 };
 
 //post login user
-//expected body: {email, password}
+//expected body: {identifier, password}
 const loginUser = async (req, res) => {
     const {identifier, password } = req.body;
     //check to make sure both fields were filled in
@@ -121,8 +122,6 @@ const loginUser = async (req, res) => {
         process.env.JWT_KEY,
         { expiresIn: "24h" }
     );
-    console.log(token)
-
     res.status(200).json({ token:token, id:user.id });
 }
 
@@ -184,6 +183,7 @@ const deleteUser = async (req, res) => {
 };
 
 // Expected headers: { Authorization: "Bearer JWT_TOKEN_HERE" }
+//response: {user}
 const currentUser = async (req, res) => {
     if (!req.headers.authorization) {
         return res.status(401).send("Please login");
@@ -200,10 +200,18 @@ const currentUser = async (req, res) => {
         
         const user = await knex("users").where({ id: decodedToken.id }).first();
 
+        if (!user) {
+            return res.status(404).json({
+                message: `User with ID ${decodedToken.id} not found`,
+            });
+        }
+
         delete user.password;
+        console.log("User Data:", user);
         res.json(user);
     } catch (err) {
-        return res.status(401).send("Invalid auth token: ", err);
+        console.error("Token Verification Error:"+ err);
+        return res.status(401).send(`Invalid auth token: ${err.message}`);
     }
 };
 

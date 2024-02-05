@@ -24,7 +24,6 @@ const findOneRoom = async (req, res) => {
         }
 
         const roomData = roomsFound[0];
-        console.log(roomData);
         res.json(roomData);
     } catch (error) {
         res.status(500).json({
