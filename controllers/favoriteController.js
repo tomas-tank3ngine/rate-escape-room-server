@@ -3,7 +3,7 @@ const knex = require("knex")(knexConfig);
 const { v4: uuidv4 } = require("uuid");
 
 const getAllFavoriteRooms = async (req, res) => {
-  const userId = req.params.userId; // Assuming you can get the user ID from the request parameters
+  const userId = req.params.userId;
 
   try {
     // Assuming there's a table named "favorites" to store user-room relationships
@@ -18,10 +18,6 @@ const getAllFavoriteRooms = async (req, res) => {
       message: `Unable to get favorite rooms for user with ID ${userId}: ${error}`,
     });
   }
-};
-
-module.exports = {
-  getAllFavoriteRooms,
 };
 
 const addRoomToFavorites = async (req, res) => {

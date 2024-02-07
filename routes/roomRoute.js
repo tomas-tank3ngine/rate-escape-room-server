@@ -1,16 +1,22 @@
 const router = require("express").Router();
 const roomController = require("../controllers/roomController");
 
-router.route("/")
+router
+    .route("/")
     .get(roomController.allRooms)
-    .post(roomController.addRoom)
+    
+    //expected body: name, user_id, description, theme, group_size, duration
+    //response: {createdRoom}
+    .post(roomController.addRoom);
 
-router.route("/:id")
+router
+    .route("/:id")
     .get(roomController.findOneRoom)
     .patch(roomController.updateRoom)
-    .delete(roomController.deleteRoom)
+    .delete(roomController.deleteRoom);
 
-router.route("/:id/reviews")
+router
+    .route("/:id/reviews")
     .get(roomController.roomReviews)
     .post(roomController.addRoomReview);
 

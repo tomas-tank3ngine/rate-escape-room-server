@@ -88,6 +88,7 @@ const registerUser = async (req, res) => {
 
 //post login user
 //expected body: {identifier, password}
+//response: {token, id}
 const loginUser = async (req, res) => {
     const {identifier, password } = req.body;
     //check to make sure both fields were filled in
@@ -118,11 +119,12 @@ const loginUser = async (req, res) => {
     }
 
     const token = jwt.sign(
-        { id: user.id, email: user.email },
+        { id: user.id, user: user },
         process.env.JWT_KEY,
         { expiresIn: "24h" }
     );
     res.status(200).json({ token:token, id:user.id });
+    console.log("token is: "+token)
 }
 
 // Update a user by ID
