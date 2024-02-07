@@ -19,10 +19,10 @@ exports.up = function (knex) {
       table.string("description").notNullable();
       table.string("theme").notNullable();
       table.string("address");
-      table.string("cost");
+      table.string("cost").notNullable();
       table.integer("group_size").notNullable();
       table.integer("duration").notNullable();
-      table.string("difficulty");
+      table.string("difficulty").notNullable();
       table.float("completion_rate").defaultTo(0);
       table.float("overall_rating").defaultTo(0);
       table.float("atmosphere_rating").defaultTo(0);

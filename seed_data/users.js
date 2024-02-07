@@ -1,42 +1,42 @@
 module.exports = [
     {
         id: 1,
-        username: "testName1",
-        password: "testPass1",
-        email: "testEmail1",
+        username: "owner",
+        password: "password",
+        email: "test@Email1",
         thumbnail: "test",
         is_owner: true,
-      },
-      {
+    },
+    {
         id: 2,
-        username: "testName2",
-        password: "testPass2",
-        email: "testEmail2",
+        username: "user",
+        password: "password",
+        email: "test@Email2",
         thumbnail: "test",
         is_owner: false,
-      },
-      {
+    },
+    {
         id: 3,
-        username: "testName3",
-        password: "testPass3",
-        email: "testEmail3",
+        username: "user3",
+        password: "password",
+        email: "test@Email3",
         thumbnail: "test",
         is_owner: false,
-      },
-      {
+    },
+    {
         id: 4,
-        username: "testName4",
-        password: "testPass4",
-        email: "testEmail4",
+        username: "user4",
+        password: "password",
+        email: "test@Email4",
         thumbnail: "test",
         is_owner: false,
-      },
-      {
+    },
+    {
         id: 5,
-        username: "testName5",
-        password: "testPass5",
-        email: "testEmail5",
+        username: "owner5",
+        password: "password",
+        email: "test@Email5",
         thumbnail: "test",
         is_owner: true,
-      },
-]
+    },
+];
