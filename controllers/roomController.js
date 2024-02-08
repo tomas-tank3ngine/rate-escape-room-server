@@ -159,7 +159,7 @@ const roomReviews = async (req, res) => {
 
         const response = {
             reviews: reviews,
-            averageRatings: averageRatings
+            averageRatings: averageRatings,
         };
 
         res.status(200).json(response);
@@ -270,8 +270,7 @@ const addRoomReview = async (req, res) => {
     }
 };
 
-async function calculateReviews (roomId) {
-
+async function calculateReviews(roomId) {
     try {
         const reviews = await knex("reviews")
             .where("room_id", roomId)
@@ -334,9 +333,9 @@ async function calculateReviews (roomId) {
 
         return average;
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-};
+}
 
 //note that module.exports is an object with functions inside it
 module.exports = {
