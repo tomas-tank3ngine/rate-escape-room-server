@@ -10,6 +10,9 @@ router
     .patch(authorize, userController.updateUser)
     .delete(authorize, userController.deleteUser);
 
+// router
+//     .route("/:id/")
+
 router
     .route("/account/current")
     // Expected headers: { Authorization: "Bearer JWT_TOKEN_HERE" }

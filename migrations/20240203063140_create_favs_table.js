@@ -7,6 +7,7 @@ exports.up = function (knex) {
         table.uuid("id").primary();
         table.uuid("user_id").notNullable();
         table.uuid("room_id").notNullable();
+        table.boolean("isFavorite").defaultTo(false);
 
         // Add foreign key constraints if needed
         table
