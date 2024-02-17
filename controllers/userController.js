@@ -217,6 +217,18 @@ const currentUser = async (req, res) => {
     }
 };
 
+const allFavorites = async (req, res)=>{
+    //get all of user.id's favorite rooms from the favorite rooms table
+    const userId = req.user.id;
+    try {
+        const data = await knex("users").where({ id: req.user.id });
+        console.log(data)
+        res.status(200).json(data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //note that module.exports is an object with functions inside it
 module.exports = {
     allUsers,
@@ -226,4 +238,5 @@ module.exports = {
     currentUser,
     registerUser,
     loginUser,
+    allFavorites,
 };

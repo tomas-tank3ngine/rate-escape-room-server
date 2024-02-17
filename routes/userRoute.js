@@ -10,8 +10,9 @@ router
     .patch(authorize, userController.updateUser)
     .delete(authorize, userController.deleteUser);
 
-// router
-//     .route("/:id/")
+router
+    .route("/favorites")//TODO - complete in User controller
+    .get(authorize, userController.allFavorites);
 
 router
     .route("/account/current")

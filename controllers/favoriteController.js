@@ -36,7 +36,7 @@ const addRoomToFavorites = async (req, res) => {
             });
         }
 
-        // Add the room to favorites table
+        // Add the room-to-user relationship to favorites table
         await knex("favorites").insert({
             id: uuidv4(),
             user_id,
