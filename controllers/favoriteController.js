@@ -24,6 +24,7 @@ const getAllFavoriteRooms = async (req, res) => {
 const addRoomToFavorites = async (req, res) => {
     try {
         const { user_id, room_id } = req.body;
+        console.log(`req.body: ${req.body}`)
 
         // Check if the room is already in favorites table
         const existingFavorite = await knex("favorites")

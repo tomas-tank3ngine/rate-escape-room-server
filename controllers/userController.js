@@ -221,9 +221,23 @@ const allFavorites = async (req, res)=>{
     //get all of user.id's favorite rooms from the favorite rooms table
     const userId = req.user.id;
     try {
-        const data = await knex("users").where({ id: req.user.id });
-        console.log(data)
-        res.status(200).json(data);
+        // const data = await knex("rooms").where({ user_id: userId });
+        //Fetch all favorite rooms of the user
+        const favoriteRooms = await knex("favorites")
+            .where({user_id: userId})
+            .select("room_id");
+        
+        //Extract room IDs from the favorite rooms
+        const favoriteRoomIds = favoriteRooms.map(room => room.room_id)
+
+        //Fetch details of the favorite rooms
+        const favoriteRoomsDetails = await knex("rooms")
+            .whereIn("id", favoriteRoomIds)
+            .select("id", "name",)
+
+        console.log("res data: "+favoriteRoomsDetails)
+        res.status(200).json(favoriteRoomsDetails);
+        
     } catch (error) {
         console.log(error);
     }

@@ -11,8 +11,11 @@ router
     .delete(authorize, userController.deleteUser);
 
 router
-    .route("/favorites")//TODO - complete in User controller
+    .route("/:id/favorites")//TODO - complete in User controller
     .get(authorize, userController.allFavorites);
+// router
+//     .route("/:id/favorites")
+    
 
 router
     .route("/account/current")

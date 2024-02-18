@@ -4,9 +4,7 @@ const authorize = require("../middleware/authorize");
 
 
 router.route("/")
-    .post(authorize, favoriteController.addRoomToFavorites)
-
-router.route("/:id")
+    .post( authorize, favoriteController.addRoomToFavorites)
     .delete(authorize, favoriteController.removeRoomFromFavorites)
 
 module.exports = router;
