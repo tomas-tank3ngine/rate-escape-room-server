@@ -15,13 +15,13 @@ app.use(cors())
 app.use(express.json());
 
 //Basic Home Route
-app.get("/api/", (_req, res) => {
+app.get("/", (_req, res) => {
   res.send("Welcome to my API");
 });
 
-app.use("/api/rooms", roomRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/favorites", favoriteRoutes);
+app.use("/rooms", roomRoutes);
+app.use("/users", userRoutes);
+app.use("/favorites", favoriteRoutes);
 
 app.listen(PORT, () => {
   console.log(`running at http://localhost:${PORT}`);
