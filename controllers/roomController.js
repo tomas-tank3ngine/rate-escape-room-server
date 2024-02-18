@@ -2,6 +2,7 @@ const knexConfig = require("../knexfile.js").development;
 const knex = require("knex")(knexConfig);
 const { v4: uuidv4 } = require("uuid");
 
+//response: [{roomData}, {roomData}]
 const allRooms = async (_req, res) => {
     try {
         const data = await knex("rooms");
@@ -154,7 +155,7 @@ const roomReviews = async (req, res) => {
         // Retrieve reviews for the room
         const reviews = await knex("reviews").where({ room_id: room_id });
 
-        //Calculate averate for all ratings
+        //Calculate average for all ratings
         const averageRatings = await calculateReviews(room_id);
 
         const response = {
@@ -287,12 +288,12 @@ async function calculateReviews(roomId) {
         // Check if there are any reviews
         if (totalReviews === 0) {
             return {
-                overall_rating: 0,
-                atmosphere: 0,
-                puzzleFairness: 0,
-                tech: 0,
-                storyline: 0,
-                staff: 0,
+                overall_rating: 3,
+                atmosphere: 3,
+                puzzleFairness: 3,
+                tech: 3,
+                storyline: 3,
+                staff: 3,
             };
         }
 
@@ -318,18 +319,17 @@ async function calculateReviews(roomId) {
         // Calculate the average rating
         const average = {
             overall_rating:
-                (sum.atmosphere +
-                    sum.puzzleFairness +
-                    sum.tech +
-                    sum.storyline +
-                    sum.staff) /
-                (5 * totalReviews),
-            atmosphere_rating: sum.atmosphere / totalReviews,
-            puzzle_fairness_rating: sum.puzzleFairness / totalReviews,
-            tech_rating: sum.tech / totalReviews,
-            storyline_rating: sum.storyline / totalReviews,
-            staff_rating: sum.staff / totalReviews,
-        };
+                (sum.atmosphere/totalReviews +
+                sum.puzzleFairness/totalReviews +
+                sum.tech/totalReviews +
+                sum.storyline/totalReviews +
+                sum.staff/totalReviews) / 5,
+                atmosphere_rating: sum.atmosphere / totalReviews,
+                puzzle_fairness_rating: sum.puzzleFairness / totalReviews,
+                tech_rating: sum.tech / totalReviews,
+                storyline_rating: sum.storyline / totalReviews,
+                staff_rating: sum.staff / totalReviews,
+            };
 
         return average;
     } catch (error) {

@@ -217,6 +217,32 @@ const currentUser = async (req, res) => {
     }
 };
 
+const allFavorites = async (req, res)=>{
+    //get all of user.id's favorite rooms from the favorite rooms table
+    const userId = req.user.id;
+    try {
+        // const data = await knex("rooms").where({ user_id: userId });
+        //Fetch all favorite rooms of the user
+        const favoriteRooms = await knex("favorites")
+            .where({user_id: userId})
+            .select("room_id");
+        
+        //Extract room IDs from the favorite rooms
+        const favoriteRoomIds = favoriteRooms.map(room => room.room_id)
+
+        //Fetch details of the favorite rooms
+        const favoriteRoomsDetails = await knex("rooms")
+            .whereIn("id", favoriteRoomIds)
+            .select("id", "name",)
+
+        console.log("res data: "+favoriteRoomsDetails)
+        res.status(200).json(favoriteRoomsDetails);
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //note that module.exports is an object with functions inside it
 module.exports = {
     allUsers,
@@ -226,4 +252,5 @@ module.exports = {
     currentUser,
     registerUser,
     loginUser,
+    allFavorites,
 };

@@ -20,11 +20,13 @@ const getAllFavoriteRooms = async (req, res) => {
   }
 };
 
+//expected body: {user_id, room_id}
 const addRoomToFavorites = async (req, res) => {
     try {
         const { user_id, room_id } = req.body;
+        console.log(`req.body: ${req.body}`)
 
-        // Check if the room is already in favorites
+        // Check if the room is already in favorites table
         const existingFavorite = await knex("favorites")
             .where({ user_id, room_id })
             .first();
@@ -35,7 +37,7 @@ const addRoomToFavorites = async (req, res) => {
             });
         }
 
-        // Add the room to favorites
+        // Add the room-to-user relationship to favorites table
         await knex("favorites").insert({
             id: uuidv4(),
             user_id,
@@ -52,6 +54,7 @@ const addRoomToFavorites = async (req, res) => {
     }
 };
 
+//expected body: {user_id, room_id}
 const removeRoomFromFavorites = async (req, res) => {
     try {
         const { user_id, room_id } = req.body;

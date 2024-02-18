@@ -11,6 +11,13 @@ router
     .delete(authorize, userController.deleteUser);
 
 router
+    .route("/:id/favorites")//TODO - complete in User controller
+    .get(authorize, userController.allFavorites);
+// router
+//     .route("/:id/favorites")
+    
+
+router
     .route("/account/current")
     // Expected headers: { Authorization: "Bearer JWT_TOKEN_HERE" }
     //response: {user}

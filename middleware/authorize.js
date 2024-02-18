@@ -26,6 +26,7 @@ module.exports = (req, res, next) => {
     if (err) {
       return res.status(403).json({ error: "Invalid JWT" });
     }
+    req.user = decoded;
     next();
   });
 };
